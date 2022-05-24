@@ -12,7 +12,7 @@ class SearchArtistsArtistsRepositoryImpl @Inject constructor(
     private val searchArtistsApiService: SearchArtistsApiService
 ): NetworkWrapper(), SearchArtistsRepository {
 
-    override suspend fun searchArtistByName(artistName: String): NetworkResponse<SearchResponse<Artist>> {
+    override suspend fun searchArtistByName(artistName: String): NetworkResponse<SearchResponse<List<Artist>>> {
         return networkResponseOf {
             searchArtistsApiService.searchArtistByNameQuery(
                 artistName = artistName

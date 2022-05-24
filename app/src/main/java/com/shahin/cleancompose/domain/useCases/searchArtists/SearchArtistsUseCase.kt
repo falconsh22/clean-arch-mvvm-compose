@@ -10,7 +10,7 @@ class SearchArtistsUseCase @Inject constructor(
     private val searchArtistsRepository: SearchArtistsRepository
 ) {
 
-    suspend fun searchArtistsByName(artistName: String): NetworkResponse<SearchResponse<Artist>> {
+    suspend fun searchArtistsByName(artistName: String): NetworkResponse<SearchResponse<List<Artist>>> {
         return searchArtistsRepository.searchArtistByName(
             artistName
         )

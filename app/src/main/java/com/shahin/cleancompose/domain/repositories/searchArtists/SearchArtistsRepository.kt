@@ -6,6 +6,6 @@ import com.shahin.cleancompose.network.NetworkResponse
 
 interface SearchArtistsRepository {
 
-    suspend fun searchArtistByName(artistName: String): NetworkResponse<SearchResponse<Artist>>
+    suspend fun searchArtistByName(artistName: String): NetworkResponse<SearchResponse<List<Artist>>>
 
 }

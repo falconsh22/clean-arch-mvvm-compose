@@ -15,6 +15,6 @@ interface SearchArtistsApiService {
         @Query("order") order: String = OrderType.Ranking.type,
         @Query("index") page: Int = 1,
         @Query("limit") limit: Int = 25
-    ): Response<SearchResponse<Artist>>
+    ): Response<SearchResponse<List<Artist>>>
 
 }

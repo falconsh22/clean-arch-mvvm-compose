@@ -11,5 +11,5 @@ data class SearchResponse<T>(
 	val total: Int,
 
 	@field:SerializedName("data")
-	val data: List<T>
+	val data: T
 )
