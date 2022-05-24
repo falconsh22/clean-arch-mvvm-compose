@@ -1,6 +1,6 @@
 package com.shahin.cleancompose.di.searchArtists
 
-import com.shahin.cleancompose.data.remote.searchArtists.SearchArtistsApiService
+import com.shahin.cleancompose.data.remote.searchArtists.services.SearchArtistsApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

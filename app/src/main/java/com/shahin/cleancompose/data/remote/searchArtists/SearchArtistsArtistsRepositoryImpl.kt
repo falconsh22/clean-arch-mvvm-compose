@@ -1,5 +1,6 @@
 package com.shahin.cleancompose.data.remote.searchArtists
 
+import com.shahin.cleancompose.data.remote.searchArtists.services.SearchArtistsApiService
 import com.shahin.cleancompose.domain.repositories.searchArtists.SearchArtistsRepository
 import javax.inject.Inject
 
