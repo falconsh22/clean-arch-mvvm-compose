@@ -19,9 +19,9 @@ import kotlinx.coroutines.launch
 fun SearchArtistScreen(
     searchArtistsViewModel: SearchArtistsViewModel = hiltViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
+            val coroutineScope = rememberCoroutineScope()
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = "",

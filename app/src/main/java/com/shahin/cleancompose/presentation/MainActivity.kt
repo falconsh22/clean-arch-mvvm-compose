@@ -9,13 +9,14 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.shahin.cleancompose.presentation.searchArtists.SearchArtistScreen
 import com.shahin.cleancompose.ui.theme.CleanComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CleanComposeTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
