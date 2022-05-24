@@ -1,4 +1,4 @@
-package com.shahin.cleancompose
+package com.shahin.cleancompose.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
