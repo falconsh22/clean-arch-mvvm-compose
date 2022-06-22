@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchArtistsViewModel @Inject constructor(
     private val searchArtistsUseCase: SearchArtistsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _artists: MutableLiveData<List<Artist>> = MutableLiveData()
     val artists: LiveData<List<Artist>> = _artists
@@ -26,5 +26,8 @@ class SearchArtistsViewModel @Inject constructor(
             is NetworkResponse.NetworkError -> TODO()
         }
     }
+
+    fun searchArtistsByNamePaging(artistName: String) =
+        searchArtistsUseCase.searchArtistsByNamePaging(artistName)
 
 }

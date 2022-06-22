@@ -6,11 +6,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -18,6 +20,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
+import com.shahin.cleancompose.domain.repositories.searchArtists.paging.SearchArtistsPagingSource
 import com.shahin.cleancompose.ui.theme.Blue200
 import com.shahin.cleancompose.ui.theme.Teal200
 import com.shahin.cleancompose.ui.views.SearchArtistItemView
@@ -27,10 +35,28 @@ import kotlinx.coroutines.launch
 fun SearchArtistScreen(
     searchArtistsViewModel: SearchArtistsViewModel = hiltViewModel()
 ) {
+
     val coroutineScope = rememberCoroutineScope()
     var text by remember {
         mutableStateOf("")
     }
+
+    val pager = remember {
+        Pager(
+            PagingConfig(
+                pageSize = 25,
+                enablePlaceholders = true,
+                maxSize = 200
+            )
+        ) {
+            searchArtistsViewModel.searchArtistsByNamePaging(
+                artistName = text
+            )
+        }
+    }
+
+    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+
     val focusManager = LocalFocusManager.current
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -67,7 +93,29 @@ fun SearchArtistScreen(
             val artistsState = searchArtistsViewModel.artists.observeAsState()
             LazyColumn {
                 items(artistsState.value ?: emptyList()) { item ->
-                    SearchArtistItemView(artist = item)
+
+                }
+                if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
+                    item {
+                        Text(
+                            text = "Loading ...",
+                            modifier = Modifier.fillMaxWidth()
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+
+                itemsIndexed(lazyPagingItems) { _, item ->
+                    item?.let { SearchArtistItemView(artist = it) }
+                }
+
+                if (lazyPagingItems.loadState.append == LoadState.Loading) {
+                    item {
+                        CircularProgressIndicator(
+                            modifier = Modifier.fillMaxWidth()
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                        )
+                    }
                 }
             }
         }

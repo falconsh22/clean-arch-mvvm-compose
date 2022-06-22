@@ -89,5 +89,9 @@ dependencies {
     // coil
     implementation 'io.coil-kt:coil-compose:2.0.0-rc01'
 
+    // compose livedata support
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+
+    // compose paging
+    implementation "androidx.paging:paging-compose:1.0.0-alpha15"
 }

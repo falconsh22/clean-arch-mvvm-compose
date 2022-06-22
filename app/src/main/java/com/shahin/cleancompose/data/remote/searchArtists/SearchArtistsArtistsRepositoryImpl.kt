@@ -10,12 +10,26 @@ import javax.inject.Inject
 
 class SearchArtistsArtistsRepositoryImpl @Inject constructor(
     private val searchArtistsApiService: SearchArtistsApiService
-): NetworkWrapper(), SearchArtistsRepository {
+) : NetworkWrapper(), SearchArtistsRepository {
 
-    override suspend fun searchArtistByName(artistName: String): NetworkResponse<SearchResponse<List<Artist>>> {
+    override suspend fun searchArtistByName(
+        artistName: String
+    ): NetworkResponse<SearchResponse<List<Artist>>> {
         return networkResponseOf {
             searchArtistsApiService.searchArtistByNameQuery(
                 artistName = artistName
+            )
+        }
+    }
+
+    override suspend fun searchArtistByNamePaging(
+        artistName: String,
+        page: Int
+    ): NetworkResponse<SearchResponse<List<Artist>>> {
+        return networkResponseOf {
+            searchArtistsApiService.searchArtistByNameQuery(
+                artistName = artistName,
+                page = page
             )
         }
     }
