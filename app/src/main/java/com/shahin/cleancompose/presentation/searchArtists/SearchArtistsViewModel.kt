@@ -3,7 +3,7 @@ package com.shahin.cleancompose.presentation.searchArtists
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shahin.cleancompose.data.remote.artist.models.Artist
+import com.shahin.cleancompose.data.remote.artist.models.response.Artist
 import com.shahin.cleancompose.domain.useCases.searchArtists.SearchArtistsUseCase
 import com.shahin.cleancompose.network.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel

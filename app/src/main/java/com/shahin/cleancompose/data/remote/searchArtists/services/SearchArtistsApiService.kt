@@ -1,7 +1,7 @@
 package com.shahin.cleancompose.data.remote.searchArtists.services
 
 import com.shahin.cleancompose.commons.OrderType
-import com.shahin.cleancompose.data.remote.artist.models.Artist
+import com.shahin.cleancompose.data.remote.artist.models.response.Artist
 import com.shahin.cleancompose.data.remote.searchArtists.models.response.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET

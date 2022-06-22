@@ -1,4 +1,4 @@
-package com.shahin.cleancompose.data.remote.artist.models
+package com.shahin.cleancompose.data.remote.artist.models.response
 
 import com.google.gson.annotations.SerializedName
 
