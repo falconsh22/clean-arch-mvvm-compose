@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.shahin.cleancompose.R
-import com.shahin.cleancompose.data.remote.artist.models.response.Artist
+import com.shahin.cleancompose.data.remote.searchArtists.models.response.Artist
 import com.shahin.cleancompose.ui.theme.Typography
 
 @Composable
