@@ -21,6 +21,9 @@ class SearchArtistsPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Artist> {
+        if (artistName.isEmpty()) {
+            return LoadResult.Error(Throwable("Nothing to show!"))
+        }
         val nextPageNumber = params.key ?: 1
         when (
             val response = searchArtistsRepository.searchArtistByNamePaging(
