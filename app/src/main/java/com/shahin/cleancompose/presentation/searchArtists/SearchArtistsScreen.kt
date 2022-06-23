@@ -1,5 +1,6 @@
 package com.shahin.cleancompose.presentation.searchArtists
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,6 +25,7 @@ import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import androidx.paging.compose.itemsIndexed
 import com.shahin.cleancompose.domain.repositories.searchArtists.paging.SearchArtistsPagingSource
 import com.shahin.cleancompose.ui.theme.Blue200
@@ -35,6 +37,7 @@ import kotlinx.coroutines.launch
 fun SearchArtistScreen(
     searchArtistsViewModel: SearchArtistsViewModel = hiltViewModel()
 ) {
+    val focusManager = LocalFocusManager.current
 
     val coroutineScope = rememberCoroutineScope()
     var text by remember {
@@ -42,22 +45,14 @@ fun SearchArtistScreen(
     }
 
     val pager = remember {
-        Pager(
-            PagingConfig(
-                pageSize = 25,
-                enablePlaceholders = true,
-                maxSize = 200
-            )
-        ) {
-            searchArtistsViewModel.searchArtistsByNamePaging(
-                artistName = text
-            )
-        }
+        searchArtistsViewModel.searchArtistsByNamePaging(
+            artistName = text
+        )
     }
 
-    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+    val lazyPagingItems = pager.collectAsLazyPagingItems()
+    Log.d("App Log", lazyPagingItems.itemCount.toString())
 
-    val focusManager = LocalFocusManager.current
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
             TextField(
@@ -90,11 +85,9 @@ fun SearchArtistScreen(
                     }
                 )
             )
-            val artistsState = searchArtistsViewModel.artists.observeAsState()
-            LazyColumn {
-                items(artistsState.value ?: emptyList()) { item ->
 
-                }
+            LazyColumn {
+
                 if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
                     item {
                         Text(
@@ -105,8 +98,9 @@ fun SearchArtistScreen(
                     }
                 }
 
-                itemsIndexed(lazyPagingItems) { _, item ->
-                    item?.let { SearchArtistItemView(artist = it) }
+                items(lazyPagingItems) { item ->
+                    Log.d("App Log", item?.id ?: "NULL")
+                    SearchArtistItemView(artist = item)
                 }
 
                 if (lazyPagingItems.loadState.append == LoadState.Loading) {

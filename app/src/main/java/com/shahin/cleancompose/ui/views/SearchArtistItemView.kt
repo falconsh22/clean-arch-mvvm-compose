@@ -18,7 +18,7 @@ import com.shahin.cleancompose.data.remote.searchArtists.models.response.Artist
 import com.shahin.cleancompose.ui.theme.Typography
 
 @Composable
-fun SearchArtistItemView(artist: Artist) {
+fun SearchArtistItemView(artist: Artist?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -27,14 +27,14 @@ fun SearchArtistItemView(artist: Artist) {
     ) {
         Image(
             painter = rememberAsyncImagePainter(
-                model = artist.pictureSmall,
+                model = artist?.pictureSmall ?: "",
                 placeholder = painterResource(id = R.drawable.ic_round_photo_24)
             ),
             contentDescription = null,
             modifier = Modifier.size(60.dp)
         )
         Text(
-            text = artist.name ?: "Unknown",
+            text = artist?.name ?: "Unknown",
             modifier = Modifier
                 .fillMaxWidth(),
             style = Typography.body1

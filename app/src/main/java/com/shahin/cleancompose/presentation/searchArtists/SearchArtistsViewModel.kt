@@ -3,10 +3,16 @@ package com.shahin.cleancompose.presentation.searchArtists
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.shahin.cleancompose.data.remote.searchArtists.models.response.Artist
 import com.shahin.cleancompose.domain.useCases.searchArtists.SearchArtistsUseCase
 import com.shahin.cleancompose.network.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +33,16 @@ class SearchArtistsViewModel @Inject constructor(
         }
     }
 
-    fun searchArtistsByNamePaging(artistName: String) =
-        searchArtistsUseCase.searchArtistsByNamePaging(artistName)
+    fun searchArtistsByNamePaging(artistName: String): Flow<PagingData<Artist>> {
+        return Pager(
+            PagingConfig(
+                pageSize = 25,
+                enablePlaceholders = true,
+                maxSize = 200
+            )
+        ) {
+            searchArtistsUseCase.searchArtistsByNamePaging(artistName)
+        }.flow.cachedIn(viewModelScope)
+    }
 
 }
