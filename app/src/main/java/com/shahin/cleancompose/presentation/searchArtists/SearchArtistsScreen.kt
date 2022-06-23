@@ -51,7 +51,6 @@ fun SearchArtistScreen(
     }
 
     val lazyPagingItems = pager.collectAsLazyPagingItems()
-    Log.d("App Log", lazyPagingItems.itemCount.toString())
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -92,21 +91,22 @@ fun SearchArtistScreen(
                     item {
                         Text(
                             text = "Loading ...",
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .wrapContentWidth(Alignment.CenterHorizontally)
                         )
                     }
                 }
 
                 items(lazyPagingItems) { item ->
-                    Log.d("App Log", item?.id ?: "NULL")
                     SearchArtistItemView(artist = item)
                 }
 
                 if (lazyPagingItems.loadState.append == LoadState.Loading) {
                     item {
                         CircularProgressIndicator(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .wrapContentWidth(Alignment.CenterHorizontally)
                         )
                     }

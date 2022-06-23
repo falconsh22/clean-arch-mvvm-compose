@@ -28,8 +28,12 @@ class SearchArtistsViewModel @Inject constructor(
             is NetworkResponse.Success -> {
                 _artists.postValue(results.result?.data)
             }
-            is NetworkResponse.Failure -> TODO()
-            is NetworkResponse.NetworkError -> TODO()
+            is NetworkResponse.Failure -> {
+                
+            }
+            is NetworkResponse.NetworkError -> {
+
+            }
         }
     }
 
