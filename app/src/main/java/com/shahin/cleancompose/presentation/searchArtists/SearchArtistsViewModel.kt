@@ -12,7 +12,7 @@ import com.shahin.cleancompose.data.remote.searchArtists.models.response.Artist
 import com.shahin.cleancompose.domain.useCases.searchArtists.SearchArtistsUseCase
 import com.shahin.cleancompose.network.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +29,7 @@ class SearchArtistsViewModel @Inject constructor(
                 _artists.postValue(results.result?.data)
             }
             is NetworkResponse.Failure -> {
-                
+
             }
             is NetworkResponse.NetworkError -> {
 
@@ -37,8 +37,15 @@ class SearchArtistsViewModel @Inject constructor(
         }
     }
 
+    private val _artistsName: MutableLiveData<String> = MutableLiveData()
+    val artistsName: LiveData<String> = _artistsName
+
+    fun queryArtistName(string: String) {
+        _artistsName.postValue(string)
+    }
+
     fun searchArtistsByNamePaging(artistName: String): Flow<PagingData<Artist>> {
-        return Pager(
+        return  Pager(
             PagingConfig(
                 pageSize = 25,
                 enablePlaceholders = true,

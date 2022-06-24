@@ -40,15 +40,12 @@ fun SearchArtistScreen(
     val focusManager = LocalFocusManager.current
 
     val coroutineScope = rememberCoroutineScope()
-    var text by remember {
-        mutableStateOf("")
-    }
+    val text by searchArtistsViewModel.artistsName.observeAsState(initial = "")
 
-    val pager = remember {
-        searchArtistsViewModel.searchArtistsByNamePaging(
-            artistName = text
-        )
-    }
+
+    val pager = searchArtistsViewModel.searchArtistsByNamePaging(
+        artistName = text
+    )
 
     val lazyPagingItems = pager.collectAsLazyPagingItems()
 
@@ -66,10 +63,7 @@ fun SearchArtistScreen(
                     unfocusedIndicatorColor = Color.Transparent
                 ),
                 onValueChange = {
-                    text = it
-                    coroutineScope.launch {
-                        searchArtistsViewModel.searchArtistsByName(it)
-                    }
+                    searchArtistsViewModel.queryArtistName(it)
                 },
                 label = {
                     Text(text = "Search something ...")
