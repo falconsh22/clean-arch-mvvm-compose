@@ -49,7 +49,6 @@ fun SearchArtistScreen(
             value = text,
             shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Blue100,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
