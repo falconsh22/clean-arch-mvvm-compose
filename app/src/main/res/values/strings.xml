@@ -2,4 +2,5 @@
     <string name="app_name">CleanCompose</string>
     <string name="loading">Loading ...</string>
     <string name="search_hint">Search something ...</string>
+    <string name="unknown">Unknown</string>
 </resources>

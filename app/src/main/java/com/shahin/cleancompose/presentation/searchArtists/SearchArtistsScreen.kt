@@ -79,7 +79,9 @@ fun SearchArtistScreen(
             )
         )
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.padding(6.dp)
+        ) {
 
             items(lazyPagingItems) { item ->
                 SearchArtistItemView(artist = item)
