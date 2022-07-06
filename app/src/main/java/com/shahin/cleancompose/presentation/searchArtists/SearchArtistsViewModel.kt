@@ -48,7 +48,7 @@ class SearchArtistsViewModel @Inject constructor(
         return  Pager(
             PagingConfig(
                 pageSize = 25,
-                enablePlaceholders = true,
+                enablePlaceholders = false,
                 maxSize = 200
             )
         ) {

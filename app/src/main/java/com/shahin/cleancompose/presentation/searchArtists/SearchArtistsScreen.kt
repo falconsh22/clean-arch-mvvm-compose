@@ -50,60 +50,63 @@ fun SearchArtistScreen(
 
     val lazyPagingItems = pager.collectAsLazyPagingItems()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                value = text,
-                shape = RoundedCornerShape(8.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Blue200,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                onValueChange = {
-                    searchArtistsViewModel.queryArtistName(it)
-                },
-                label = {
-                    Text(text = stringResource(R.string.search_hint))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
-                )
+    Column(modifier = Modifier.fillMaxSize()) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = text,
+            shape = RoundedCornerShape(8.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Blue200,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            onValueChange = {
+                searchArtistsViewModel.queryArtistName(it)
+            },
+            label = {
+                Text(text = stringResource(R.string.search_hint))
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                }
             )
+        )
 
-            LazyColumn {
+        LazyColumn {
 
-                if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
-                    item {
-                        Text(
-                            text = stringResource(R.string.loading),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.CenterHorizontally)
-                        )
+            items(lazyPagingItems) { item ->
+                SearchArtistItemView(artist = item)
+            }
+            lazyPagingItems.apply {
+                when {
+                    loadState.refresh is LoadState.Loading -> {
+                        item {
+                            Text(
+                                text = stringResource(R.string.loading),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.CenterHorizontally)
+                            )
+                        }
                     }
-                }
-
-                items(lazyPagingItems) { item ->
-                    SearchArtistItemView(artist = item)
-                }
-
-                if (lazyPagingItems.loadState.append == LoadState.Loading) {
-                    item {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.CenterHorizontally)
-                        )
+                    loadState.append is LoadState.Loading -> {
+                        item {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.CenterHorizontally)
+                            )
+                        }
+                    }
+                    loadState.append is LoadState.Error -> {
+                        // Show error message
                     }
                 }
             }
