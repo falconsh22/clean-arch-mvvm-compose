@@ -16,7 +16,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -27,6 +29,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import androidx.paging.compose.itemsIndexed
+import com.shahin.cleancompose.R
 import com.shahin.cleancompose.domain.repositories.searchArtists.paging.SearchArtistsPagingSource
 import com.shahin.cleancompose.ui.theme.Blue200
 import com.shahin.cleancompose.ui.theme.Teal200
@@ -39,9 +42,7 @@ fun SearchArtistScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    val coroutineScope = rememberCoroutineScope()
     val text by searchArtistsViewModel.artistsName.observeAsState(initial = "")
-
 
     val pager = searchArtistsViewModel.searchArtistsByNamePaging(
         artistName = text
@@ -66,7 +67,7 @@ fun SearchArtistScreen(
                     searchArtistsViewModel.queryArtistName(it)
                 },
                 label = {
-                    Text(text = "Search something ...")
+                    Text(text = stringResource(R.string.search_hint))
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
@@ -84,7 +85,7 @@ fun SearchArtistScreen(
                 if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
                     item {
                         Text(
-                            text = "Loading ...",
+                            text = stringResource(R.string.loading),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.CenterHorizontally)
