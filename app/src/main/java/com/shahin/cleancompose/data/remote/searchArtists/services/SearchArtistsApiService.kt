@@ -13,7 +13,7 @@ interface SearchArtistsApiService {
     suspend fun searchArtistByNameQuery(
         @Query("q") artistName: String,
         @Query("order") order: String = OrderType.Ranking.type,
-        @Query("index") page: Int = 1,
+        @Query("index") page: Int = 0,
         @Query("limit") limit: Int = 25
     ): Response<SearchResponse<List<Artist>>>
 

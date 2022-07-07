@@ -24,7 +24,7 @@ class SearchArtistsPagingSource(
         if (artistName.isEmpty()) {
             return LoadResult.Error(Throwable("Nothing to show!"))
         }
-        val nextPageNumber = params.key ?: 1
+        val nextPageNumber = params.key ?: 0
         when (
             val response = searchArtistsRepository.searchArtistByNamePaging(
                 artistName = artistName,
