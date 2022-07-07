@@ -80,13 +80,15 @@ fun SearchArtistScreen(
             lazyPagingItems.apply {
                 when {
                     loadState.refresh is LoadState.Loading -> {
-                        item {
-                            Text(
-                                text = stringResource(R.string.loading),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentWidth(Alignment.CenterHorizontally)
-                            )
+                        if (this.itemCount == 0) {
+                            item {
+                                Text(
+                                    text = stringResource(R.string.search_artist_name),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentWidth(Alignment.CenterHorizontally)
+                                )
+                            }
                         }
                     }
                     loadState.append is LoadState.Loading -> {
