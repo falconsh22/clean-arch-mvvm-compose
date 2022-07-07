@@ -8,6 +8,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.shahin.cleancompose.commons.Constants.QUERY_DELAY
 import com.shahin.cleancompose.data.remote.searchArtists.models.response.Artist
 import com.shahin.cleancompose.domain.useCases.searchArtists.SearchArtistsUseCase
 import com.shahin.cleancompose.network.NetworkResponse
@@ -37,15 +38,27 @@ class SearchArtistsViewModel @Inject constructor(
         }
     }
 
-    private val _artistsName: MutableLiveData<String> = MutableLiveData()
-    val artistsName: LiveData<String> = _artistsName
+    private val _artistsName: MutableStateFlow<String> = MutableStateFlow("")
+    val artistsName: Flow<String> = _artistsName
 
-    fun queryArtistName(string: String) {
-        _artistsName.postValue(string)
+    fun queryArtistName(updatedQuery: String) {
+        _artistsName.value = updatedQuery
     }
 
-    fun searchArtistsByNamePaging(artistName: String): Flow<PagingData<Artist>> {
-        return  Pager(
+    fun runSearchQuery(query: Flow<String>) {
+        query.debounce(QUERY_DELAY)
+            .filter { it.isNotEmpty() }
+            .distinctUntilChanged()
+            .onEach {
+                searchArtistsByNamePaging(it)
+            }.launchIn(viewModelScope)
+    }
+
+    private val _artistsFlow: MutableStateFlow<PagingData<Artist>> = MutableStateFlow(PagingData.empty())
+    val artistsFlow: Flow<PagingData<Artist>> = _artistsFlow
+
+    private suspend fun searchArtistsByNamePaging(artistName: String) {
+        Pager(
             PagingConfig(
                 pageSize = 25,
                 enablePlaceholders = false,
@@ -53,7 +66,9 @@ class SearchArtistsViewModel @Inject constructor(
             )
         ) {
             searchArtistsUseCase.searchArtistsByNamePaging(artistName)
-        }.flow.cachedIn(viewModelScope)
+        }.flow.cachedIn(viewModelScope).collectLatest {
+            _artistsFlow.value = it
+        }
     }
 
 }

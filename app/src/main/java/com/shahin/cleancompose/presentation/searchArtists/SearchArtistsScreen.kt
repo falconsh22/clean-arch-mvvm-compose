@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +23,6 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.shahin.cleancompose.R
-import com.shahin.cleancompose.ui.theme.Blue100
 import com.shahin.cleancompose.ui.views.SearchArtistItemView
 
 @Composable
@@ -33,27 +31,30 @@ fun SearchArtistScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    val text by searchArtistsViewModel.artistsName.observeAsState(initial = "")
+    val artistNameFlow = searchArtistsViewModel.artistsName
+    val artistNameText by artistNameFlow.collectAsState(initial = "")
 
-    val pager = searchArtistsViewModel.searchArtistsByNamePaging(
-        artistName = text
+    searchArtistsViewModel.runSearchQuery(
+        query = artistNameFlow
     )
 
-    val lazyPagingItems = pager.collectAsLazyPagingItems()
+    val lazyPagingItems = searchArtistsViewModel.artistsFlow.collectAsLazyPagingItems()
 
     Column(modifier = Modifier.fillMaxSize()) {
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            value = text,
+            value = artistNameText,
             shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
-            onValueChange = {
-                searchArtistsViewModel.queryArtistName(it)
+            onValueChange = { textValue ->
+                searchArtistsViewModel.queryArtistName(
+                    updatedQuery = textValue
+                )
             },
             label = {
                 Text(text = stringResource(R.string.search_hint))
