@@ -25,6 +25,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.shahin.cleancompose.R
+import com.shahin.cleancompose.ui.dimensions.Padding
+import com.shahin.cleancompose.ui.dimensions.PaddingHalf
+import com.shahin.cleancompose.ui.theme.Shapes
 import com.shahin.cleancompose.ui.views.SearchArtistItemView
 
 @Composable
@@ -49,9 +52,9 @@ fun SearchArtistScreen(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(Padding),
             value = artistNameText,
-            shape = RoundedCornerShape(8.dp),
+            shape = Shapes.large,
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
@@ -76,7 +79,7 @@ fun SearchArtistScreen(
         )
 
         LazyColumn(
-            modifier = Modifier.padding(6.dp),
+            modifier = Modifier.padding(PaddingHalf),
             userScrollEnabled = true,
             state = lazyListState
         ) {

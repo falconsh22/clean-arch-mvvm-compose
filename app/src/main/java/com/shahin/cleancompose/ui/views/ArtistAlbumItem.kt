@@ -13,12 +13,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.shahin.cleancompose.R
 import com.shahin.cleancompose.data.remote.albums.models.response.Album
+import com.shahin.cleancompose.ui.dimensions.PaddingHalf
 
 @Composable
 fun ArtistAlbumItem(album: Album) {
 
     Column(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(PaddingHalf),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(

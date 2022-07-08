@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.shahin.cleancompose.ui.dimensions.PaddingHalf
 import com.shahin.cleancompose.ui.views.ArtistAlbumItem
 import kotlinx.coroutines.launch
 
@@ -27,7 +27,7 @@ fun ArtistAlbumsScreen(
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         userScrollEnabled = true,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier.padding(PaddingHalf)
     ) {
         coroutineScope.launch {
             artistAlbumsViewModel.getAlbums(artistId = id)
