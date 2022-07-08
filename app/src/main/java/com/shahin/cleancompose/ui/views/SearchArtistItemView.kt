@@ -52,7 +52,7 @@ fun SearchArtistItemView(artist: Artist?, navController: NavController? = null) 
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    model = artist?.pictureSmall ?: "",
+                    model = artist?.pictureMedium ?: "",
                     placeholder = painterResource(id = R.drawable.ic_round_photo_24)
                 ),
                 contentDescription = null,
