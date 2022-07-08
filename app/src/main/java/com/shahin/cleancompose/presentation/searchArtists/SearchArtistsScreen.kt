@@ -2,6 +2,7 @@ package com.shahin.cleancompose.presentation.searchArtists
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -32,6 +33,8 @@ fun SearchArtistScreen(
     navController: NavController
 ) {
     val focusManager = LocalFocusManager.current
+
+    val lazyListState = rememberLazyListState()
 
     val artistNameFlow = searchArtistsViewModel.artistsName
     val artistNameText by artistNameFlow.collectAsState(initial = "")
@@ -74,7 +77,8 @@ fun SearchArtistScreen(
 
         LazyColumn(
             modifier = Modifier.padding(6.dp),
-            userScrollEnabled = true
+            userScrollEnabled = true,
+            state = lazyListState
         ) {
 
             items(lazyPagingItems) { item ->
