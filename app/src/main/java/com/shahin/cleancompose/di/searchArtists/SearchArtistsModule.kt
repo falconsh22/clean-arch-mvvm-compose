@@ -1,6 +1,6 @@
 package com.shahin.cleancompose.di.searchArtists
 
-import com.shahin.cleancompose.data.remote.searchArtists.SearchArtistsArtistsRepositoryImpl
+import com.shahin.cleancompose.data.remote.searchArtists.SearchArtistsRepositoryImpl
 import com.shahin.cleancompose.domain.repositories.searchArtists.SearchArtistsRepository
 import dagger.Binds
 import dagger.Module
@@ -16,7 +16,7 @@ abstract class SearchArtistsModule {
     @Singleton
     @Binds
     abstract fun bindSearchRepository(
-        searchArtistsRepositoryImpl: SearchArtistsArtistsRepositoryImpl
+        searchArtistsRepositoryImpl: SearchArtistsRepositoryImpl
     ): SearchArtistsRepository
 
 }
