@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -27,7 +28,8 @@ import com.shahin.cleancompose.ui.views.SearchArtistItemView
 
 @Composable
 fun SearchArtistScreen(
-    searchArtistsViewModel: SearchArtistsViewModel = hiltViewModel()
+    searchArtistsViewModel: SearchArtistsViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -71,11 +73,12 @@ fun SearchArtistScreen(
         )
 
         LazyColumn(
-            modifier = Modifier.padding(6.dp)
+            modifier = Modifier.padding(6.dp),
+            userScrollEnabled = true
         ) {
 
             items(lazyPagingItems) { item ->
-                SearchArtistItemView(artist = item)
+                SearchArtistItemView(artist = item, navController = navController)
             }
             lazyPagingItems.apply {
                 when {

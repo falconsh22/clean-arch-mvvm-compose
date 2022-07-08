@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -17,6 +18,7 @@ import com.shahin.cleancompose.data.remote.albums.models.response.Album
 fun ArtistAlbumItem(album: Album) {
 
     Column(
+        modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -27,7 +29,10 @@ fun ArtistAlbumItem(album: Album) {
             contentDescription = null,
             modifier = Modifier.fillMaxWidth().height(100.dp)
         )
-        Text(text = album.title ?: "")
+        Text(
+            text = album.title ?: "",
+            textAlign = TextAlign.Center
+        )
     }
 
 }
